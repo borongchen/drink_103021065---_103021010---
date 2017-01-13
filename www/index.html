@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+<title>JUMP PAGE</title>
+<style> 
+p{
+	opacity:0.5;
+filter:Alpha(Opacity=50, Style=0);
+border-radius:10px;
+}
+
+#id {
+  display:block;
+  margin: auto;
+  min-width:100%;
+  max-width:1500px;
+}
+#skip {
+  display:block;
+  margin: auto;
+  max-width:1500px;
+}
+</style>
+</head>
+<body bgcolor="#F4FCF3">
+ <form id="form1" runat="server">
+        <div id="div1"></div>
+</form>
+ <a href="drink.html" target="_blank" ><p Align="right"><img id="skip" src="http://i.imgur.com/cCAR1pk.png" border="0" width="80" ></p></a>
+
+</body>
+</html>
+<script type="text/javascript">
+　　var totalAds = 3;//圖片數量（數組大小）
+　　var nameAds = new Array(totalAds);
+　　var linkAds = new Array(totalAds);
+　　var imgAds = new Array(totalAds);
+　　nameAds[0]="ten";linkAds[0]="#";imgAds[0]="ten9.png";
+　　nameAds[1]="snowo";linkAds[1]="#";imgAds[1]="snow5.jpg";
+　　nameAds[2]="tea";linkAds[2]="#";imgAds[2]="tea5.png";
+　　var numAds = Math.floor(Math.random() * totalAds);
+　　document.write('<img id="ad" src="'+ imgAds[numAds] +'" alt="'+ nameAds[numAds] +'" border="7"  width="95%"; >');
+//設定倒數秒數
+var t = 10;
+//顯示倒數秒收
+function showTime()
+{
+    t -= 1;
+    document.getElementById('div1').innerHTML=t+'秒後跳轉網頁';
+    if(t==0)
+    {
+        location.href="drink.html";
+    }
+    //每秒執行一次,showTime()
+    setTimeout("showTime()",1000);
+}
+
+//執行showTime()
+showTime();
+</script>

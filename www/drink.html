@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<title>首頁</title>
+<head>
+    <meta charset="utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.getJSON("http://120.108.111.157/~103021065/json.php", function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+				var id = field.id;
+				var name = field.name;
+                var address = field.address;
+                var phone = field.phone;
+                var lat = field.lat;
+                var lng = field.lng;
+				var pic = field.pic;
+				var src = field.src;
+                $(".app").append("<div class=\"aaa\">"+"<div class=\"bannerTitle\" id=\"a\">"+"<img src=\""+field.pic+"\" width=\"100%\" height=\"100%\">"+ "</div>"+"<p>"+"店名:" +name+"</p>" +"<p>"+"地址:" +address+"</p>" +"<p>"+"電話:"+phone+"</p>" +"<p>"+"<a href=\""+field.src+"\" class=\"src\">"+"更多......"+"</a>"+ "</p>"+"<br/>"+"</div>");
+            });
+        });
+    });
+
+    </script>
+</head>
+
+<body>
+<div id="indexPage">
+
+<div class="nav">
+  <ul class="topnav">
+    <li><a class="active" href="drink.html">Home</a></li>
+    <li class="right"><a href="#about">About</a></li>
+  </ul>
+</div>
+ <div class="app">
+ </div>
+  </div>
+ <script type="text/javascript">
+
+    //使用jQuery mobile设置提示框的信息
+    function showMyAlert(text) {
+        $.mobile.loadingMessageTextVisible = true;
+        $.mobile.showPageLoadingMsg("a", text, true);
+    }
+    
+    //弹出提示框信息的方法，两秒后隐藏
+    function myAlert(text) {
+        showMyAlert(text);
+        setTimeout(hideLoading, 2000);
+    }
+    
+    //隐藏提示框的方法
+    function hideLoading() {
+        $.mobile.hidePageLoadingMsg();
+    }        
+    //退出app
+    function exitApp() {
+        navigator.app.exitApp();
+    }
+</script>
+<script type="text/javascript">
+    $(function(){
+        document.addEventListener('deviceready',myDeviceready,false);
+    })
+    
+    function myDeviceready(){
+        console.log('设备加载完成');
+                
+        document.addEventListener('backbutton',myBackbutton,false);    
+    }
+    
+    
+    //点击返回按钮的事件
+    function myBackbutton(){
+        //下面的if判断页面是否是id为indexPage的页面如果是才执行，否则执行else的返回上一页
+        if ($.mobile.activePage.is('#indexPage')) {
+            myAlert('再点击一次退出!');
+            document.removeEventListener("backbutton", myBackbutton, false); // 注销返回键
+            document.addEventListener("backbutton", exitApp, false);// 通过监听返回键绑定退出事件
+            // 3秒后重新注册
+            var intervalID = window.setTimeout(function() {
+                window.clearTimeout(intervalID);
+                document.removeEventListener("backbutton", exitApp, false); // 注销返退出事件
+                document.addEventListener("backbutton", myBackbutton, false); // 返回键
+            }, 3000);
+        }else{
+            navigate.app.backHistory();//相当于浏览器的后退
+        }                
+    }
+</body>
+	
+</html>
